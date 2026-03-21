@@ -110,12 +110,12 @@ const Hero = () => {
         <div className="flex justify-center">
           <div className="relative w-80 h-80">
             {/* Animated Border */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue via-purple-500 to-cyan-500 rounded-2xl p-1 animate-spin opacity-50" style={{ animationDuration: '8s' }}>
-              <div className="bg-dark rounded-2xl w-full h-full"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue via-purple-500 to-cyan-500 rounded-full p-1 animate-spin opacity-50" style={{ animationDuration: '8s' }}>
+              <div className="bg-dark rounded-full w-full h-full"></div>
             </div>
             
             {/* Image Container */}
-            <div className="absolute inset-0 rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 rounded-full overflow-hidden">
               <img 
                 src="/images/hero-image.jpeg" 
                 alt="Sabyasachi Samal" 

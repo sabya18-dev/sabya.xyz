@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useInView } from 'react-intersection-observer';
 
 const About = ({ isDark }) => {
@@ -6,19 +6,6 @@ const About = ({ isDark }) => {
     triggerOnce: true,
     threshold: 0.1,
   });
-
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientY - rect.top) / rect.height - 0.5;
-    const y = (e.clientX - rect.left) / rect.width - 0.5;
-    setTilt({ x: x * 10, y: y * 10 });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-  };
 
   return (
     <section id="about" className="py-20 relative overflow-hidden">
@@ -48,29 +35,13 @@ const About = ({ isDark }) => {
             </p>
           </div>
 
-          {/* 3D Card with Profile Image */}
-          <div
-            className="perspective h-96 cursor-pointer relative"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          >
-            {/* Animated Border */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue via-purple-500 to-cyan-500 rounded-2xl p-1 animate-spin opacity-50" style={{ animationDuration: '8s' }}>
-              <div className="bg-dark rounded-2xl w-full h-full"></div>
-            </div>
-
-            {/* Image Card Container */}
-            <div
-              className="absolute inset-0 rounded-2xl overflow-hidden transition-transform duration-300"
-              style={{
-                transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                transformStyle: 'preserve-3d',
-              }}
-            >
+          {/* Animation Container */}
+          <div className="flex justify-center items-center h-96">
+            <div className="relative w-full max-w-sm h-full flex justify-center items-center">
               <img 
-                src="/images/profile-card.jpeg" 
-                alt="Sabyasachi Samal" 
-                className="w-full h-full object-cover"
+                src="/images/about-animation.gif" 
+                alt="Success Animation" 
+                className="max-w-full max-h-full object-contain"
               />
             </div>
           </div>
