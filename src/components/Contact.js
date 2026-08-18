@@ -3,8 +3,8 @@ import { FaEnvelope, FaPhone, FaGithub, FaLinkedin, FaTwitter } from 'react-icon
 import { HiArrowNarrowRight } from 'react-icons/hi';
 import emailjs from '@emailjs/browser';
 
-// Initialize Email.js with Public Key from environment variables
-emailjs.init(process.env.REACT_APP_EMAILJS_PUBLIC_KEY);
+// EmailJS v4: initialize with options object (NOT a plain string)
+emailjs.init({ publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY });
 
 const Contact = ({ isDark }) => {
   const [formData, setFormData] = useState({

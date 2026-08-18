@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { HiArrowNarrowRight } from 'react-icons/hi';
 
-const ROLES = ['Full Stack Developer', 'Java Developer', 'AI Enthusiast'];
+const ROLES = ['Full Stack Developer', 'AI Enthusiast', 'Problem Solver'];
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('');
@@ -50,7 +50,7 @@ const Hero = () => {
             Hey, I am<br />
             <span className="text-gradient">Sabyasachi Samal</span>
           </h1>
-          
+
           <p className="text-xl md:text-2xl font-semibold text-blue mb-6 h-12 flex items-center">
             {displayText}
             <span className="typing-text ml-2">|</span>
@@ -62,14 +62,14 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <button 
+            <button
               onClick={() => handleScroll('projects')}
               className="btn-primary flex items-center justify-center gap-3 group"
             >
               View Projects
               <HiArrowNarrowRight className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <button 
+            <button
               onClick={() => handleScroll('contact')}
               className="btn-secondary"
             >
@@ -113,12 +113,12 @@ const Hero = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-blue via-purple-500 to-cyan-500 rounded-full p-1 animate-spin opacity-50" style={{ animationDuration: '8s' }}>
               <div className="bg-dark rounded-full w-full h-full"></div>
             </div>
-            
+
             {/* Image Container */}
             <div className="absolute inset-0 rounded-full overflow-hidden">
-              <img 
-                src="/images/hero-image.jpeg" 
-                alt="Sabyasachi Samal" 
+              <img
+                src="/images/hero-image.jpeg"
+                alt="Sabyasachi Samal"
                 className="w-full h-full object-cover"
               />
             </div>
