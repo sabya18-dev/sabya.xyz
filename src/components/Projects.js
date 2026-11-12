@@ -6,7 +6,7 @@ const Projects = ({ isDark }) => {
   const projectsData = [
     {
       id: 1,
-      title: 'AI Powered Resume Builder',
+      title: 'AI Career Intelligence',
       description: 'Smart resume generator using AI to create professional, tailored resumes with real-time suggestions and AI optimization.',
       tech: ['React', 'Node.js', 'AI APIs', 'MongoDB'],
       image: '/images/ai poerd resume buider.jpeg',
@@ -60,8 +60,8 @@ const Projects = ({ isDark }) => {
               <div
                 className="relative w-full h-full card-3d rounded-2xl overflow-hidden flex flex-col"
                 style={{
-                  transform: hoveredProject === index 
-                    ? 'rotateY(5deg) rotateX(5deg) translateZ(30px)' 
+                  transform: hoveredProject === index
+                    ? 'rotateY(5deg) rotateX(5deg) translateZ(30px)'
                     : 'rotateY(0deg) rotateX(0deg)',
                   transformStyle: 'preserve-3d',
                   transition: 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
@@ -92,7 +92,7 @@ const Projects = ({ isDark }) => {
                   <h3 className="text-xl font-bold mb-2 group-hover:text-blue transition-colors line-clamp-2">
                     {project.title}
                   </h3>
-                  
+
                   {/* Description */}
                   <p
                     className="text-gray-300 text-xs leading-relaxed mb-3 line-clamp-2 transition-all duration-300"
@@ -121,8 +121,8 @@ const Projects = ({ isDark }) => {
                   className="absolute inset-0 rounded-2xl border-2 border-transparent transition-colors duration-300"
                   style={{
                     borderColor: hoveredProject === index ? 'rgba(0, 102, 255, 0.5)' : 'rgba(0, 102, 255, 0)',
-                    boxShadow: hoveredProject === index 
-                      ? '0 0 30px rgba(0, 102, 255, 0.4)' 
+                    boxShadow: hoveredProject === index
+                      ? '0 0 30px rgba(0, 102, 255, 0.4)'
                       : 'none',
                   }}
                 ></div>
