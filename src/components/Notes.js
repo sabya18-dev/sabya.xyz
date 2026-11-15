@@ -11,7 +11,8 @@ import {
   FaStar, 
   FaBolt, 
   FaTimes,
-  FaBookOpen
+  FaBookOpen,
+  FaExternalLinkAlt
 } from 'react-icons/fa';
 import { HiCheck, HiSparkles } from 'react-icons/hi';
 
@@ -31,6 +32,18 @@ const Notes = ({ isDark }) => {
   const [statusMessage, setStatusMessage] = useState(null);
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
   const [pdfViewerOpen, setPdfViewerOpen] = useState(false);
+
+  // Auto-scroll to #notes if URL has hash on load
+  useEffect(() => {
+    if (window.location.hash === '#notes') {
+      const el = document.getElementById('notes');
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+      }
+    }
+  }, []);
 
   // Check on mount if user already purchased (stored in localStorage)
   useEffect(() => {
@@ -59,7 +72,7 @@ const Notes = ({ isDark }) => {
           }
         })
         .catch(() => {
-          // If offline/server not reachable yet, keep cached state
+          // If offline or local dev, retain cached status
           setIsUnlocked(true);
         });
     }
@@ -92,7 +105,7 @@ const Notes = ({ isDark }) => {
       });
 
       if (!orderRes.ok) {
-        throw new Error('Failed to create order on server.');
+        throw new Error('Failed to create order on server. Ensure backend is running.');
       }
 
       const orderData = await orderRes.json();
@@ -101,7 +114,7 @@ const Notes = ({ isDark }) => {
       if (orderData.isDemo) {
         setStatusMessage({
           type: 'info',
-          text: 'Demo test mode active. Completing verified order simulation...',
+          text: 'Demo test mode active. Simulating verified order completion...',
         });
 
         // Simulate successful checkout for test mode
@@ -140,7 +153,7 @@ const Notes = ({ isDark }) => {
       const keyId = configData.keyId || process.env.REACT_APP_RAZORPAY_KEY_ID;
 
       if (!keyId) {
-        throw new Error('Razorpay Key ID not configured. Please check environment variables.');
+        throw new Error('Razorpay Key ID not configured. Please set RAZORPAY_KEY_ID in your environment.');
       }
 
       // 3. Ensure Razorpay SDK is loaded
@@ -156,13 +169,13 @@ const Notes = ({ isDark }) => {
         currency: orderData.currency || 'INR',
         name: 'Sabyasachi Samal',
         description: 'DSA Placement Preparation Sheet',
-        image: '/images/hero-photo.jpg',
+        image: '/images/hero-image.jpeg',
         order_id: orderData.id,
         theme: {
           color: '#0066ff',
         },
         handler: async function (response) {
-          setStatusMessage({ type: 'info', text: 'Verifying payment with server...' });
+          setStatusMessage({ type: 'info', text: 'Verifying payment on backend...' });
           try {
             // Server-side signature verification
             const verifyRes = await fetch(`${API_BASE}/api/verify-payment`, {
@@ -246,6 +259,11 @@ const Notes = ({ isDark }) => {
   const handleView = () => {
     if (!accessToken) return;
     setPdfViewerOpen(true);
+  };
+
+  const handleOpenNewTab = () => {
+    if (!accessToken) return;
+    window.open(`${API_BASE}/api/pdf/view?token=${accessToken}`, '_blank');
   };
 
   const featuresList = [
@@ -381,7 +399,7 @@ const Notes = ({ isDark }) => {
               {/* PDF Document Visual Cover */}
               <div className="p-6 sm:p-8">
                 <div className="relative group perspective">
-                  {/* PDF Cover Card Preview */}
+                  {/* Realistic 3D PDF Cover Card */}
                   <div className="relative rounded-2xl bg-gradient-to-br from-[#12182b] via-[#0d1322] to-[#0a0e1a] border border-blue/30 p-6 shadow-2xl transition-all duration-500 hover:border-blue/50">
                     {/* Badge on cover */}
                     <div className="flex justify-between items-center mb-4">
@@ -401,20 +419,23 @@ const Notes = ({ isDark }) => {
                       <p className="text-xs text-gray-400 mt-1">
                         All Approaches Included (Brute • Better • Optimal)
                       </p>
+                      <p className="text-[11px] text-blue-300 font-mono mt-1">
+                        Prepared by Vinay Kajla
+                      </p>
                     </div>
 
                     {/* Snippet / Content Preview items */}
                     <div className="space-y-2 text-xs text-gray-300">
                       <div className="flex items-center justify-between p-2 rounded bg-black/30 border border-white/5">
-                        <span className="font-mono text-cyan-300">01. Arrays & Hashing</span>
+                        <span className="font-mono text-cyan-300">01. Arrays, Strings & BS</span>
                         <span className="text-emerald-400 font-semibold">Included ✓</span>
                       </div>
                       <div className="flex items-center justify-between p-2 rounded bg-black/30 border border-white/5">
-                        <span className="font-mono text-cyan-300">02. Dynamic Programming</span>
+                        <span className="font-mono text-cyan-300">02. Trees, BST & Graphs</span>
                         <span className="text-emerald-400 font-semibold">Included ✓</span>
                       </div>
                       <div className="flex items-center justify-between p-2 rounded bg-black/30 border border-white/5">
-                        <span className="font-mono text-cyan-300">03. Graph Algorithms</span>
+                        <span className="font-mono text-cyan-300">03. Dynamic Programming & Tries</span>
                         <span className="text-emerald-400 font-semibold">Included ✓</span>
                       </div>
                     </div>
@@ -428,7 +449,7 @@ const Notes = ({ isDark }) => {
                         </div>
                         <button
                           onClick={() => setPreviewModalOpen(true)}
-                          className="text-xs text-blue hover:text-cyan-300 transition-colors underline flex items-center gap-1"
+                          className="text-xs text-blue hover:text-cyan-300 transition-colors underline flex items-center gap-1 cursor-pointer"
                         >
                           <FaEye /> Peek Index
                         </button>
@@ -594,7 +615,7 @@ const Notes = ({ isDark }) => {
               </div>
               <button 
                 onClick={() => setPreviewModalOpen(false)}
-                className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors cursor-pointer"
               >
                 <FaTimes size={18} />
               </button>
@@ -629,7 +650,7 @@ const Notes = ({ isDark }) => {
                     setPreviewModalOpen(false);
                     handlePayment();
                   }}
-                  className="btn-primary py-2 px-5 text-sm font-semibold rounded-lg"
+                  className="btn-primary py-2 px-5 text-sm font-semibold rounded-lg cursor-pointer"
                 >
                   Unlock Now – ₹19
                 </button>
@@ -639,7 +660,7 @@ const Notes = ({ isDark }) => {
                     setPreviewModalOpen(false);
                     handleView();
                   }}
-                  className="btn-primary py-2 px-5 text-sm font-semibold rounded-lg"
+                  className="btn-primary py-2 px-5 text-sm font-semibold rounded-lg cursor-pointer"
                 >
                   View Full PDF
                 </button>
@@ -665,14 +686,20 @@ const Notes = ({ isDark }) => {
 
               <div className="flex items-center gap-3">
                 <button
+                  onClick={handleOpenNewTab}
+                  className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-medium transition-colors cursor-pointer"
+                >
+                  <FaExternalLinkAlt size={12} /> Full Screen Tab
+                </button>
+                <button
                   onClick={handleDownload}
-                  className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue/20 hover:bg-blue/30 text-cyan-300 text-xs font-semibold border border-blue/30 transition-colors"
+                  className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue/20 hover:bg-blue/30 text-cyan-300 text-xs font-semibold border border-blue/30 transition-colors cursor-pointer"
                 >
                   <FaDownload /> Download Copy
                 </button>
                 <button
                   onClick={() => setPdfViewerOpen(false)}
-                  className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                  className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors cursor-pointer"
                 >
                   <FaTimes size={20} />
                 </button>

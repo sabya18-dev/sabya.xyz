@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaHtml5, FaCss3, FaJs, FaReact, FaNode, FaBootstrap, FaJava } from 'react-icons/fa';
+import { FaHtml5, FaCss3, FaJs, FaReact, FaNode, FaBootstrap, FaJava, FaDatabase } from 'react-icons/fa';
 import { SiExpress, SiMongodb, SiTailwindcss } from 'react-icons/si';
 import { HiCode } from 'react-icons/hi';
 
@@ -18,6 +18,7 @@ const Skills = ({ isDark }) => {
     { name: 'Bootstrap', icon: <FaBootstrap className="text-4xl" />, color: '#7952B3' },
     { name: 'Java', icon: <FaJava className="text-4xl" />, color: '#007396' },
     { name: 'C', icon: <HiCode className="text-4xl" />, color: '#00599C' },
+    { name: 'SQL', icon: <FaDatabase className="text-4xl" />, color: '#336791' },
   ];
 
   return (
