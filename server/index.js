@@ -10,8 +10,12 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(express.json());
+// Middleware - captures rawBody buffer for Razorpay webhook HMAC verification
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  }
+}));
 
 // CORS configuration
 app.use((req, res, next) => {
@@ -361,6 +365,15 @@ app.get('/api/pdf/download', (req, res) => {
       }
     }
   });
+});
+
+// 8. Razorpay Webhook Endpoint
+const webhookHandler = require('../api/webhook');
+app.post('/api/webhook', (req, res) => {
+  return webhookHandler(req, res);
+});
+app.post('/api/razorpay-webhook', (req, res) => {
+  return webhookHandler(req, res);
 });
 
 // Serve frontend build if present (for single-command production run)
