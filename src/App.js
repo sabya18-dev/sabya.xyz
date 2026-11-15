@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
+import Notes from './components/Notes';
 import Contact from './components/Contact';
 import Loader from './components/Loader';
 import Chatbot from './components/Chatbot';
@@ -29,6 +30,7 @@ function App() {
       <About isDark={isDark} />
       <Skills isDark={isDark} />
       <Projects isDark={isDark} />
+      <Notes isDark={isDark} />
       <Contact isDark={isDark} />
       <Chatbot />
       <footer className="border-t border-blue/20 py-8 text-center text-gray-400">

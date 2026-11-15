@@ -5,7 +5,7 @@ import { Link } from 'react-scroll';
 const Navbar = ({ isDark, setIsDark, scrolled }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navLinks = ['About', 'Skills', 'Projects', 'Contact'];
+  const navLinks = ['About', 'Skills', 'Projects', 'Notes', 'Contact'];
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
